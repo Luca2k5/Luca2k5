@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<otobo_config version="2.0" init="Application">
+    <Setting Name="Frontend::Module###AgentTicketStatistics" Required="0" Valid="1">
+        <Description Translatable="1">Ticket statistics frontend module.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Group"><Array><Item>users</Item></Array></Item>
+                <Item Key="GroupRo"><Array><Item>users</Item></Array></Item>
+                <Item Key="Description" Translatable="1">Ticket statistics</Item>
+                <Item Key="Title" Translatable="1">Auswertung</Item>
+                <Item Key="NavBarName">Auswertung</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Navigation###AgentTicketStatistics" Required="0" Valid="1">
+        <Description Translatable="1">Main navigation entry for ticket statistics.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
+        <Value><Array><DefaultItem ValueType="Hash"><Hash>
+            <Item Key="Module">AgentTicketStatistics</Item><Item Key="Name" Translatable="1">Auswertung</Item>
+            <Item Key="Description" Translatable="1">Ticket statistics</Item><Item Key="Block">ItemArea</Item>
+            <Item Key="Link">Action=AgentTicketStatistics</Item><Item Key="NavBar">Auswertung</Item>
+            <Item Key="Type">Menu</Item><Item Key="Prio">850</Item>
+        </Hash></DefaultItem></Array></Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentTicketStatistics###001-TicketStatistics" Required="0" Valid="1">
+        <Description Translatable="1">Frontend assets.</Description><Navigation>Frontend::Base::Loader</Navigation>
+        <Value><Hash><Item Key="JavaScript"><Array><Item>Core.Agent.TicketStatistics.js</Item></Array></Item></Hash></Value>
+    </Setting>
+    <Setting Name="TicketStatistics::Origins" Required="1" Valid="1">
+        <Description Translatable="1">Allowed ticket origin values and labels.</Description><Navigation>Core::Ticket</Navigation>
+        <Value><Hash>
+            <Item Key="CustomerPortal">Kundenportal</Item><Item Key="Email_ITTicketsystem_Direct">E-Mail: it-ticketsystem@theater.freiburg.de</Item>
+            <Item Key="Email_IT_ManualFolder">E-Mail: it@theater.freiburg.de / manueller Ticketordner</Item><Item Key="Agent">Von Agent erstellt</Item>
+            <Item Key="API_NinjaOne">NinjaOne API</Item><Item Key="API_Securepoint">Securepoint API</Item><Item Key="Unknown">Unbekannt</Item>
+        </Hash></Value>
+    </Setting>
+    <Setting Name="TicketStatistics::RecipientMap" Required="1" Valid="1">
+        <Description Translatable="1">Recipient address to origin mapping.</Description><Navigation>Core::Ticket</Navigation>
+        <Value><Hash><Item Key="it-ticketsystem@theater.freiburg.de">Email_ITTicketsystem_Direct</Item><Item Key="it@theater.freiburg.de">Email_IT_ManualFolder</Item></Hash></Value>
+    </Setting>
+    <Setting Name="PostMaster::PreFilterModule###000-TicketOrigin" Required="0" Valid="1">
+        <Description Translatable="1">Classify incoming email before ticket creation.</Description><Navigation>Core::Email::PostMaster</Navigation>
+        <Value><Hash><Item Key="Module">Kernel::System::PostMaster::Filter::TicketOrigin</Item></Hash></Value>
+    </Setting>
+    <Setting Name="Ticket::EventModulePost###980-TicketOrigin" Required="0" Valid="1">
+        <Description Translatable="1">Classify portal and agent tickets from their first article.</Description><Navigation>Core::Event::Ticket</Navigation>
+        <Value><Hash><Item Key="Module">Kernel::System::Ticket::Event::TicketOrigin</Item><Item Key="Event">ArticleCreate</Item><Item Key="Transaction">1</Item></Hash></Value>
+    </Setting>
+</otobo_config>

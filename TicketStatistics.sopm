@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<otobo_package version="1.1">
+    <Name>TicketStatistics</Name><Version>0.1.0</Version><Framework>11.0.x</Framework><Vendor>Theater Freiburg</Vendor>
+    <URL>https://www.theater.freiburg.de/</URL><License>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</License>
+    <Description Lang="en">Agent ticket statistics by period and origin.</Description><Description Lang="de">Agent-Ticketstatistik nach Zeitraum und Quelle.</Description>
+    <Filelist>
+        <File Permission="644" Location="Kernel/Config/Files/XML/TicketStatistics.xml"/>
+        <File Permission="644" Location="Kernel/Modules/AgentTicketStatistics.pm"/><File Permission="644" Location="Kernel/System/TicketStatistics.pm"/>
+        <File Permission="644" Location="Kernel/System/PostMaster/Filter/TicketOrigin.pm"/><File Permission="644" Location="Kernel/System/Ticket/Event/TicketOrigin.pm"/>
+        <File Permission="644" Location="Kernel/System/Console/Command/Maint/TicketOriginBackfill.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketStatistics.tt"/><File Permission="644" Location="var/httpd/htdocs/js/Core.Agent.TicketStatistics.js"/>
+    </Filelist>
+</otobo_package>
