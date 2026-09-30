@@ -1,0 +1,32 @@
+<h1>[% Translate("Auswertung") | html %]</h1>
+<div class="WidgetSimple">
+    <div class="Header"><h2>[% Translate("Filter") | html %]</h2></div>
+    <div class="Content">
+        <form method="get" action="[% Env("CGIHandle") | html %]">
+            <input type="hidden" name="Action" value="AgentTicketStatistics" />
+            <label>[% Translate("Zeitraum") | html %]
+                <select name="Preset" id="StatsPreset">
+                    <option value="7">Letzte 7 Tage</option><option value="14">Letzte 14 Tage</option>
+                    <option value="30" selected="selected">Letzte 30 Tage</option><option value="365">Letzte 12 Monate</option>
+                    <option value="custom">Benutzerdefiniert</option>
+                </select>
+            </label>
+            <span id="StatsCustom"><label>Von <input type="date" name="From" value="[% Data.From.substr(0, 10) | html %]" /></label>
+            <label>Bis <input type="date" name="To" value="[% Data.To.substr(0, 10) | html %]" /></label></span>
+            <label>Aggregation <select name="Aggregation"><option value="day">Tag</option><option value="week">Woche</option><option value="month">Monat</option></select></label>
+            <fieldset><legend>Quellen</legend>
+                <label><input id="StatsAll" type="checkbox" checked="checked" /> Alle</label>
+                [% FOREACH Origin IN Data.Origins %]<label><input class="StatsOrigin" type="checkbox" name="Origin" value="[% Origin | html %]" checked="checked" /> [% Origin | html %]</label>[% END %]
+            </fieldset>
+            <button class="Primary" type="submit">Auswerten</button>
+        </form>
+    </div>
+</div>
+<div class="TicketStatsKPIs">
+    <div><strong>[% Data.Created | html %]</strong><span>Erstellt</span></div><div><strong>[% Data.Closed | html %]</strong><span>Geschlossen</span></div>
+    <div><strong>[% Data.Difference | html %]</strong><span>Differenz</span></div><div><strong>[% Data.Open | html %]</strong><span>Aktuell offen</span></div>
+</div>
+<div class="WidgetSimple"><div class="Header"><h2>Verlauf</h2></div><div class="Content"><div id="TicketStatsChart" data-chart="[% Data.ChartJSON | html %]"></div></div></div>
+<div class="WidgetSimple"><div class="Header"><h2>Aufschlüsselung nach Quelle</h2></div><div class="Content"><table class="DataTable"><thead><tr><th>Quelle</th><th>Erstellt</th><th>Geschlossen</th><th>Differenz</th><th>Anteil</th></tr></thead><tbody>
+[% RenderBlockStart("OriginRow") %]<tr><td>[% Data.Label | html %]</td><td>[% Data.Created | html %]</td><td>[% Data.Closed | html %]</td><td>[% Data.Difference | html %]</td><td>[% Data.Share | html %] %</td></tr>[% RenderBlockEnd("OriginRow") %]
+</tbody></table></div></div>
